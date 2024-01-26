@@ -1,15 +1,78 @@
 {
-  "name": "nextjs-project",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "check": "tsc --incremental --noEmit",
+    "lint": "eslint --cache --ext .js,.ts,.tsx . --ignore-path .gitignore",
+    "format": "prettier --write --cache .",
+    "release": "node scripts/release.js",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "simple-git-hooks"
+  },
+
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged && pnpm check",
+    "commit-msg": "node scripts/verify-commit.js"
+  },
+  "devDependencies": {
+    "@babel/parser": "^7.23.6",
+    "@babel/types": "^7.23.6",
+    "@types/hash-sum": "^1.0.2",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^20.11.1",
+    "@types/semver": "^7.5.6",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "conventional-changelog-cli": "^4.1.0",
+    "enquirer": "^2.4.1",
+    "esbuild": "^0.19.5",
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "eslint": "^8.56.0",
+    "eslint-define-config": "^1.24.1",
+    "eslint-plugin-import": "npm:eslint-plugin-i@^2.29.1",
+    "eslint-plugin-jest": "^27.6.3",
+    "estree-walker": "^2.0.2",
+    "execa": "^8.0.1",
+    "jsdom": "^23.2.0",
+    "lint-staged": "^15.2.0",
+    "lodash": "^4.17.21",
+    "magic-string": "^0.30.5",
+    "markdown-table": "^3.0.3",
+    "marked": "^11.1.1",
+    "minimist": "^1.2.8",
+    "npm-run-all": "^4.1.5",
+    "picocolors": "^1.0.0",
+    "prettier": "^3.2.2",
+    "pretty-bytes": "^6.1.1",
+    "pug": "^3.0.2",
+    "rimraf": "^5.0.5",
+    "semver": "^7.5.4",
+    "serve": "^14.2.1",
+    "simple-git-hooks": "^2.9.0",
+    "terser": "^5.22.0",
+    "todomvc-app-css": "^2.4.3",
+    "tslib": "^2.6.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.5"
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
+    ]
   },
   "engines": {
-    "node": ">=18.17.0",
-    "pnpm": "8.14.0"
+    "node": ">=18.17.0"
   }
 }
