@@ -19,11 +19,11 @@
     "removeComments": false,
     "jsx": "preserve",
     "lib": ["esnext", "dom"],
-    "types": ["puppeteer", "node"],
+    "types": ["node"],
     "rootDir": ".",
     "paths": {
-      "@fustify/*": ["packages/*/src"],
-      "fust": ["packages/fust/src"]
+      "@fusto/*": ["packages/*/src"],
+      "fusto": ["packages/fusto/src"]
     }
   },
   "include": [
