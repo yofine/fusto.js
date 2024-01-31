@@ -3,9 +3,18 @@
   "type": "module",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "exports": {
+    ".": "./create-fusto.mjs"
+  },
+  "main": "./create-fusto.mjs",
+  "bin": {
+    "create-fusto": "./create-fusto.mjs"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "fusto-scripts build \"src/index.ts\" --bundle && tsc",
+    "build:ci": "fusto-scripts build \"src/index.ts\" --bundle",
+    "dev": "fusto-scripts dev \"src/**/*.ts\"",
+    "test": "mocha --exit --timeout 20000 --parallel"
   },
   "keywords": [],
   "author": "",
