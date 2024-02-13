@@ -1,14 +1,10 @@
 /* eslint no-console: 'off' */
-import { color, say as houston, label, spinner as load } from '@astrojs/cli-kit';
-import { align, sleep } from '@astrojs/cli-kit/utils';
+import { color, say as houston, label, spinner as load } from '@fustojs/cli-kit';
+import { align, sleep } from '@fustojs/cli-kit/utils';
 import { exec } from 'node:child_process';
 import stripAnsi from 'strip-ansi';
 import { shell } from './shell.js';
 
-// Users might lack access to the global npm registry, this function
-// checks the user's project type and will return the proper npm registry
-//
-// A copy of this function also exists in the astro package
 async function getRegistry(packageManager: string): Promise<string> {
 	try {
 		const { stdout } = await shell(packageManager, ['config', 'get', 'registry']);
@@ -79,7 +75,7 @@ export const getVersion = (packageManager: string) =>
 	new Promise<string>(async (resolve) => {
 		if (v) return resolve(v);
 		let registry = await getRegistry(packageManager);
-		const { version } = await fetch(`${registry}/astro/latest`, { redirect: 'follow' }).then(
+		const { version } = await fetch(`${registry}/fusto/latest`, { redirect: 'follow' }).then(
 			(res) => res.json(),
 			() => ({ version: '' })
 		);
@@ -89,13 +85,13 @@ export const getVersion = (packageManager: string) =>
 
 export const log = (message: string) => stdout.write(message + '\n');
 export const banner = () => {
-	const prefix = `astro`;
+	const prefix = `fusto`;
 	const suffix = `Launch sequence initiated.`;
 	log(`${label(prefix, color.bgGreen, color.black)}  ${suffix}`);
 };
 
 export const bannerAbort = () =>
-	log(`\n${label('astro', color.bgRed)} ${color.bold('Launch sequence aborted.')}`);
+	log(`\n${label('fusto', color.bgRed)} ${color.bold('Launch sequence aborted.')}`);
 
 export const info = async (prefix: string, text: string) => {
 	await sleep(100);
@@ -116,7 +112,7 @@ export const error = async (prefix: string, text: string) => {
 };
 
 export const typescriptByDefault = async () => {
-	await info(`No worries!`, 'TypeScript is supported in Astro by default,');
+	await info(`No worries!`, 'TypeScript is supported in Fusto by default,');
 	log(`${' '.repeat(9)}${color.dim('but you are free to continue writing JavaScript instead.')}`);
 	await sleep(1000);
 };
@@ -148,11 +144,9 @@ export const nextSteps = async ({ projectDir, devCmd }: { projectDir: string; de
 	log(
 		`${prefix}Add frameworks like ${color.cyan(`react`)} or ${color.cyan(
 			'tailwind'
-		)} using ${color.cyan('astro add')}.`
+		)} using ${color.cyan('fusto add')}.`
 	);
 	await sleep(100);
-	log(`\n${prefix}Stuck? Join us at ${color.cyan(`https://astro.build/chat`)}`);
-	await sleep(200);
 };
 
 export function printHelp({
